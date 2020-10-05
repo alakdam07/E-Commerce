@@ -27,10 +27,8 @@ def orderList(request):
 @api_view(['POST'])
 def orderCreate(request):
 	serializer = OrderSerializer(data=request.data)
-
 	if serializer.is_valid():
 		serializer.save()
-
 	return Response(serializer.data)
 
 @api_view(['GET'])
@@ -42,31 +40,27 @@ def customerList(request):
 
 @api_view(['GET'])
 def customerDetail(request, pk):
-	customers = Customer.objects.get(id=pk)
+    customers = Customer.objects.get(id=pk)
+    # orders = customers.order_set.all()
+    serializer = CustomerWithProductsSerializer(customers, many=False)
 
-
-	serializer = CustomerSerializer(customers, many=False)
-	return Response(serializer.data)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
 def customerCreate(request):
-	serializer = CustomerSerializer(data=request.data)
-
-	if serializer.is_valid():
-		serializer.save()
-
-	return Response(serializer.data)
+    serializer = CustomerSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def customerUpdate(request, pk):
-	customer = Customer.objects.get(id=pk)
-	serializer = CustomerSerializer(instance=customer, data=request.data)
-
-	if serializer.is_valid():
-		serializer.save()
-
-	return Response(serializer.data)
+    customer = Customer.objects.get(id=pk)
+    serializer = CustomerSerializer(instance=customer, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
 
 @api_view(['DELETE'])

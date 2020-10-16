@@ -1,32 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from './components/Home';
+import PersonDetail from './components/PersonDetails'
 
 function App() {
-  const [state, setstate] = useState()
-  useEffect(() => {
-    getData()
-  }, [])
-  const getData = async () => {
-    const order = await fetch('http://127.0.0.1:8000/api/order-list/')
-    const orderData = await order.json();
-    console.log("Order-Data", orderData);
-
-    const response = await fetch('http://127.0.0.1:8000/api/customer-detail/9/');
-    const data = await response.json()
-    console.log(data);
-    setstate(data)
-  }
-  console.log("Customer-List", state);
 
   return (
-    <>
-      <div className="App">
-        {
-          <p>{state?.name}</p>
-        }
 
-      </div>
-    </>
+    <React.Fragment>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/customer-detail/:id" component={PersonDetail} />
+        </Switch>
+      </Router>
+    </React.Fragment>
+
+
   );
 }
 

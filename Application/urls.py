@@ -2,6 +2,7 @@
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
+##TemplateView for react file
 from django.views.generic import TemplateView
 
 urlpatterns = [
